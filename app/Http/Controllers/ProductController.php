@@ -5,17 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
-class CashierController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        $product = Product::all();
-
-        return view("public.index", compact("product"));
+        return view("public.product");
     }
 
     /**
@@ -31,7 +28,20 @@ class CashierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'product_name' => 'required|string|max:255',
+            'product_label' => 'required|string|max:255',
+            'product_price' => 'required|numeric',
+            'product_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+    
+        if ($request->hasFile('product_image')) {
+            $validatedData['product_image'] = $request->file('product_image')->store('products', 'public');
+        }
+    
+        Product::create($validatedData);
+    
+        return redirect()->back()->with('success', 'Product added successfully!');
     }
 
     /**
