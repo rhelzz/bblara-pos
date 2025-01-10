@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Cashier;
 
 class CashierController extends Controller
 {
@@ -31,7 +32,16 @@ class CashierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'subtotal' => 'required|numeric|min:0',
+            'tax' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
+        ]);
+
+        $cashier = Cashier::create($request->all());
+
+        return redirect()->route('cashier.index')
+            ->with('success', 'Order has been placed successfully!');
     }
 
     /**
