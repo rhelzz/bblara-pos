@@ -20,37 +20,7 @@
     <body class="bg-gray-100 flex">
 
         <!-- Sidebar -->
-        <div class="w-1/5 bg-[#3a4074] text-white min-h-screen p-4">
-            <div class="flex items-center mb-8">
-                <img src="{{ asset('assets/logo.png') }}" alt="" class="w-32 h-32 mx-auto bg-white rounded-full">
-            </div>
-            <nav class="space-y-4 ml-7">
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fas fa-cash-register"></i>
-                    <span>Cashier</span>
-                </a>
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Tambah Produk</span>
-                </a>
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fas fa-box-open"></i>
-                    <span>Barang Masuk</span>
-                </a>
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fas fa-box"></i>
-                    <span>Barang Keluar</span>
-                </a>
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Transaksi Kasir</span>
-                </a>
-                <a href="#" class="flex items-center space-x-2">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Laporan Penjualan</span>
-                </a>
-            </nav>
-        </div>
+        <x-navbar-pos></x-navbar-pos>
 
         <!-- Main Content -->
         <section class="w-4/5 p-4 flex justify-center items-center space-x-8">
