@@ -6,12 +6,11 @@
         <title>Food Order Page</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.cdnfonts.com/css/sf-ui-text-2" rel="stylesheet">
         <style>
-            body {
-                font-family: 'Poppins', sans-serif;
-            }
+            font-family: 'SF UI Text', sans-serif;
         </style>
+
     </head>
     <body class="bg-gray-100 flex">
         <!-- Sidebar -->
