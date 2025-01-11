@@ -9,6 +9,6 @@ class Cashier extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subtotal', 'tax', 'total_amount'];
+    protected $fillable = ['subtotal', 'tax', 'total_amount', 'cost_price'];
     
 }

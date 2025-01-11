@@ -52,6 +52,17 @@
                         />
                     </div>
                     <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="cost-price">Cost Price</label>
+                        <input
+                            type="number"
+                            id="cost_price"
+                            name="cost_price"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="Enter cost price"
+                            required
+                        />
+                    </div>
+                    <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="product-price">Product Price</label>
                         <input
                             type="number"

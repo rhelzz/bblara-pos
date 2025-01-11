@@ -16,6 +16,7 @@ return new class extends Migration
             $table->decimal('subtotal', 15, 2);
             $table->decimal('tax', 15, 2);
             $table->decimal('total_amount', 15, 2);
+            $table->decimal('cost_price', 15, 2);
             $table->timestamps();
         });
     }

@@ -36,6 +36,7 @@ class CashierController extends Controller
             'subtotal' => 'required|numeric|min:0',
             'tax' => 'required|numeric|min:0',
             'total_amount' => 'required|numeric|min:0',
+            'cost_price' => 'required|numeric|min:0',
         ]);
 
         $cashier = Cashier::create($request->all());

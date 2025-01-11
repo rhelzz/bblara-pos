@@ -34,7 +34,7 @@
 
         <div class="grid grid-cols-3 gap-4 lg:gap-2 xl:gap-3" id="product-list">
             @foreach ($product as $row)
-            <div class="bg-white p-4 rounded-lg shadow-lg max-w-xs xl:p-4 lg:p-2 product-card" data-name="{{ strtolower($row->product_name) }}">
+            <div class="bg-white p-4 rounded-lg shadow-lg max-w-xs xl:p-4 lg:p-2 product-card" data-name="{{ strtolower($row->product_name) }}" data-cost="{{ $row->cost_price }}">
                 <div class="flex justify-center">
                     <img
                         src="{{ asset('storage/' . $row->product_image) }}"
@@ -51,6 +51,7 @@
                             class="bg-[#3a4074] text-white rounded-lg px-4 py-2 hover:bg-indigo-700 transition duration-300 w-full add-to-order"
                             data-name="{{ $row->product_name }}"
                             data-price="{{ $row->product_price }}"
+                            data-cost="{{ $row->cost_price }}"
                         >
                             Add to order
                         </button>
@@ -90,11 +91,17 @@
                         <div class="text-base xl:text-base lg:text-xs" id="total-amount-display">Rp 0</div>
                         <input type="hidden" name="total_amount" id="total-amount-input" value="0">
                     </div>
+                    <div class="hidden">
+                        <!-- Menyertakan cost_price untuk setiap item -->
+                        @foreach ($product as $row)
+                        <input type="hidden" name="orders[{{ $row->product_name }}][cost_price]" value="{{ $row->cost_price }}">
+                        @endforeach
+                    </div>
                     <button type="button" id="place-order-button" class="bg-yellow-500 text-white w-full py-2 rounded-lg mt-4">
                         Place Order
                     </button>
                 </div>
-            </form>
+            </form>            
         </div>        
     </div>
 
@@ -133,10 +140,15 @@
 
             function renderOrders() {
                 orderList.innerHTML = ""; // Bersihkan daftar pesanan
+                let totalCostAll = 0; // Untuk menyimpan total cost semua item
 
                 for (const [name, order] of Object.entries(orders)) {
                     const orderItem = document.createElement("div");
                     orderItem.className = "flex justify-between items-center bg-gray-50 p-2 rounded-md shadow";
+
+                    // Hitung total cost berdasarkan quantity
+                    const totalCost = order.cost * order.quantity;
+                    totalCostAll += totalCost; // Menambahkan ke total keseluruhan
 
                     orderItem.innerHTML = `
                         <div>
@@ -147,6 +159,8 @@
                             <p class="order-total font-bold text-base xl:text-base lg:text-xs">${formatCurrency(order.total)}</p>
                             <button class="text-red-500 text-sm remove-item xl:text-sm lg:text-xs" data-name="${name}"><i class="fa-solid fa-trash"></i></button>
                         </div>
+                        <input type="hidden" name="orders[${name}][cost_price]" value="${totalCost}">
+                        <input type="hidden" name="orders[${name}][quantity]" value="${order.quantity}">
                     `;
 
                     orderItem.querySelector(".remove-item").addEventListener("click", () => {
@@ -162,6 +176,20 @@
 
                     orderList.appendChild(orderItem);
                 }
+
+                // Update input hidden cost_price di payment form
+                const existingCostInput = document.querySelector('input[name="cost_price"]');
+                if (!existingCostInput) {
+                    // Jika belum ada, buat input baru
+                    const costInput = document.createElement('input');
+                    costInput.type = 'hidden';
+                    costInput.name = 'cost_price';
+                    costInput.value = totalCostAll;
+                    document.getElementById('order-form').appendChild(costInput);
+                } else {
+                    // Jika sudah ada, update nilainya
+                    existingCostInput.value = totalCostAll;
+                }
             }
 
             function initializeAddToOrder() {
@@ -169,12 +197,13 @@
                     button.onclick = function () {
                         const name = this.getAttribute("data-name");
                         const price = parseInt(this.getAttribute("data-price"));
+                        const cost = parseInt(this.getAttribute("data-cost"));  // Ambil cost_price
 
                         if (orders[name]) {
                             orders[name].quantity++;
                             orders[name].total += price;
                         } else {
-                            orders[name] = { name, price, quantity: 1, total: price };
+                            orders[name] = { name, price, cost, quantity: 1, total: price };
                         }
 
                         renderOrders();
