@@ -106,6 +106,7 @@
     </div>
 
     <script>
+        // Logika Cashier
         document.addEventListener("DOMContentLoaded", function () {
             const orderList = document.getElementById("order-list");
             const subtotalElement = document.getElementById("subtotal");
@@ -235,6 +236,7 @@
     </script>
 
     <script>
+        // SweetAlert
         document.addEventListener("DOMContentLoaded", function () {
             const placeOrderButton = document.getElementById("place-order-button");
             const orderForm = document.getElementById("order-form");
