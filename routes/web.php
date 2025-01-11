@@ -3,6 +3,7 @@
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,7 +21,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('cashier', CashierController::class);
+
 Route::resource('product', ProductController::class);
+
+Route::resource('transaksi', TransaksiController::class);
 
 
 require __DIR__.'/auth.php';
