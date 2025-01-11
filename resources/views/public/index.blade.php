@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'SF Pro Display', sans-serif;
@@ -70,30 +71,26 @@
             <!-- Orders will be added here dynamically -->
         </div>
         <div>
-            <form action="{{ route('cashier.store') }}" method="POST">
+            <form id="order-form" action="{{ route('cashier.store') }}" method="POST">
                 @csrf
                 <div class="bg-[#f1f4fd] px-5 py-5 rounded-md mb-5 mt-5">
                     <div class="flex justify-between">
                         <div class="text-base xl:text-base lg:text-xs">Sub total</div>
                         <div class="text-base xl:text-base lg:text-xs" id="subtotal">Rp 0</div>
-                        <!-- Input hidden untuk subtotal -->
                         <input type="hidden" name="subtotal" id="subtotal-input" value="0">
                     </div>
                     <div class="flex justify-between">
                         <div class="text-base xl:text-base lg:text-xs">Tax</div>
                         <div class="text-base xl:text-base lg:text-xs">5%</div>
-                        <!-- Input hidden untuk pajak -->
                         <input type="hidden" name="tax" id="tax-input" value="5">
                     </div>
                     <div class="border-t-[2px] border-[#000000] border-dashed my-4"></div>
                     <div class="flex justify-between text-md font-bold">
                         <div class="text-base xl:text-base lg:text-xs">Total Amount</div>
-                        <!-- Tampilkan nilai total -->
                         <div class="text-base xl:text-base lg:text-xs" id="total-amount-display">Rp 0</div>
-                        <!-- Input hidden untuk total -->
                         <input type="hidden" name="total_amount" id="total-amount-input" value="0">
                     </div>
-                    <button type="submit" class="bg-yellow-500 text-white w-full py-2 rounded-lg mt-4">
+                    <button type="button" id="place-order-button" class="bg-yellow-500 text-white w-full py-2 rounded-lg mt-4">
                         Place Order
                     </button>
                 </div>
@@ -205,6 +202,35 @@
             });
 
             initializeAddToOrder();
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const placeOrderButton = document.getElementById("place-order-button");
+            const orderForm = document.getElementById("order-form");
+
+            placeOrderButton.addEventListener("click", function () {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want to place this order?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, place it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            "Order Placed!",
+                            "Your order has been successfully placed.",
+                            "success"
+                        ).then(() => {
+                            orderForm.submit();
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>
