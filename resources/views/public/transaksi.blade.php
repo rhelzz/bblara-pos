@@ -99,7 +99,7 @@
                             <tr class="hover:bg-gray-100">
                                 <td class="px-6 py-4">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4">{{ "Rp " . number_format($row->subtotal, 0, ',', '.') }}</td>
-                                <td class="px-6 py-4">{{ ($row->tax * 100) . "%" }}</td>
+                                <td class="px-6 py-4">{{ ($row->tax * 1) . "%" }}</td>
                                 <td class="px-6 py-4">{{ "Rp " . number_format($row->total_amount, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4">{{ "Rp " . number_format($row->cost_price, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4">{{ $row->created_at }}</td>
@@ -111,7 +111,7 @@
                             <td colspan="3" class="px-6 py-4 font-semibold text-right">Total:</td>
                             <td class="px-6 py-4 font-semibold">{{ "Rp " . number_format($totalPemasukan, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 font-semibold">{{ "Rp " . number_format($totalModal, 0, ',', '.') }}</td>
-                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4 font-semibold">Keuntungan Bersih : {{ "Rp " . number_format($totalPemasukan - $totalModal, 0, ',', '.') }}</td>
                         </tr>
                     </tfoot>
                 </table>                
