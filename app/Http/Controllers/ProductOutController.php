@@ -11,6 +11,13 @@ class ProductOutController extends Controller
     public function index()
     {
         $productOuts = ProductOut::all();
+
+        foreach ($productOuts as $productOut) {
+            if (now()->greaterThanOrEqualTo($productOut->expired_date)) {
+                $productOut->update(['status' => 'expired']);
+            }
+        }
+
         return view('product_out.index', compact('productOuts'));
     }
 
@@ -28,6 +35,9 @@ class ProductOutController extends Controller
             'status' => 'required|in:good,expired',
         ]);
 
+        // Tentukan status berdasarkan tanggal expired
+        $status = now()->greaterThanOrEqualTo($request->expired_date) ? 'expired' : 'good';
+
         $stock = Stock::where('product', $request->product)
             ->where('expired_date', $request->expired_date)
             ->first();
@@ -36,11 +46,14 @@ class ProductOutController extends Controller
             return redirect()->back()->with('error', 'Stok tidak mencukupi.');
         }
 
-        $productOut = ProductOut::create($request->all());
+        // Create ProductOut record
+        ProductOut::create(array_merge($request->all(), ['status' => $status]));
 
+        // Update stock quantities
         $stock->increment('stock_out', $request->quantity);
         $stock->decrement('stock_now', $request->quantity);
 
+        // Redirect to the index page with success message
         return redirect()->route('product_out.index')->with('success', 'Barang keluar berhasil ditambahkan.');
     }
 
@@ -58,15 +71,20 @@ class ProductOutController extends Controller
             'status' => 'required|in:good,expired',
         ]);
 
+        // Tentukan status berdasarkan tanggal expired
+        $status = now()->greaterThanOrEqualTo($request->expired_date) ? 'expired' : 'good';
+
         $difference = $request->quantity - $productOut->quantity;
 
-        $productOut->update($request->all());
+        // Update produk keluar dengan status yang benar
+        $productOut->update(array_merge($request->all(), ['status' => $status]));
 
         $stock = Stock::where('product', $request->product)
             ->where('expired_date', $request->expired_date)
             ->first();
 
         if ($stock) {
+            // Update stock sesuai dengan perubahan quantity
             $stock->increment('stock_out', $difference);
             $stock->decrement('stock_now', $difference);
         }

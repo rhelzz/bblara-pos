@@ -11,8 +11,16 @@ class ProductInController extends Controller
     public function index()
     {
         $productIns = ProductIn::all();
+
+        foreach ($productIns as $productIn) {
+            if (now()->greaterThanOrEqualTo($productIn->expired_date)) {
+                $productIn->update(['status' => 'expired']);
+            }
+        }
+
         return view('product_in.index', compact('productIns'));
     }
+
 
     public function create()
     {
@@ -29,7 +37,10 @@ class ProductInController extends Controller
             'status' => 'required|in:good,expired',
         ]);
 
-        $productIn = ProductIn::create($request->all());
+        // Tentukan status berdasarkan tanggal expired
+        $status = now()->greaterThanOrEqualTo($request->expired_date) ? 'expired' : 'good';
+
+        $productIn = ProductIn::create(array_merge($request->all(), ['status' => $status]));
 
         $stock = Stock::firstOrCreate(
             ['product' => $request->product, 'expired_date' => $request->expired_date],
@@ -57,9 +68,12 @@ class ProductInController extends Controller
             'status' => 'required|in:good,expired',
         ]);
 
+        // Tentukan status berdasarkan tanggal expired
+        $status = now()->greaterThanOrEqualTo($request->expired_date) ? 'expired' : 'good';
+
         $difference = $request->quantity - $productIn->quantity;
 
-        $productIn->update($request->all());
+        $productIn->update(array_merge($request->all(), ['status' => $status]));
 
         $stock = Stock::where('product', $request->product)
             ->where('expired_date', $request->expired_date)

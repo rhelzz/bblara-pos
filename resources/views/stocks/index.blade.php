@@ -80,12 +80,6 @@
                     <h1 class="text-2xl font-semibold">Hello, Bblar’a! 👋</h1>
                     <p class="text-gray-600">Ini adalah apa yang terjadi pada stok barang keluar-mu saat ini</p>
                 </div>
-                <div>
-                    <!-- Button Create -->
-                    <a href="{{ route('stock.create') }}" class="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow">
-                        <i class="fas fa-plus mr-2"></i>Create
-                    </a>                    
-                </div>
             </div>
 
             <div class="bg-white shadow-md rounded-lg overflow-hidden">

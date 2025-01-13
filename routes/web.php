@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashierController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductInController;
 use App\Http\Controllers\ProductOutController;
@@ -24,6 +25,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // Cashier
+
+Route::resource('dashboard', DashboardController::class);
 
 Route::resource('cashier', CashierController::class);
 

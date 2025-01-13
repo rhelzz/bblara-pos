@@ -95,21 +95,23 @@
                             <th class="px-6 py-3">No</th>
                             <th class="px-6 py-3">Produk</th>
                             <th class="px-6 py-3">Tanggal Expired</th>
-                            <th class="px-6 py-3">Harga</th>
+                            <th class="px-6 py-3">Harga Satuan</th>
                             <th class="px-6 py-3">Jumlah</th>
+                            <th class="px-6 py-3">Total Harga</th>
                             <th class="px-6 py-3">Status</th>
                             <th class="px-6 py-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach ($productIns as $row)
+                        @foreach ($productIns as $index => $row)
                             <tr class="hover:bg-gray-100">
-                                <td class="px-6 py-4">{{ $row->id }}</td>
+                                <td class="px-6 py-4">{{ $index + 1 }}</td>
                                 <td class="px-6 py-4">{{ $row->product }}</td>
                                 <td class="px-6 py-4">{{ $row->expired_date }}</td>
                                 <td class="px-6 py-4">{{ "Rp " . number_format($row->price, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4">{{ $row->quantity }}</td>
-                                <td class="px-6 py-4">{{ $row->status }}</td>
+                                <td class="px-6 py-4">{{ "Rp " . number_format($row->price * $row->quantity, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-red">{{ $row->status }}</td>
                                 <td class="px-6 py-4">
                                     <a href="{{ route('product_in.edit', $row->id) }}" class="px-3 py-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg shadow mr-2">
                                         <i class="fas fa-edit"></i> Edit
@@ -124,7 +126,7 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
+                    </tbody>                    
                 </table>                
             </div>
         </section>
