@@ -24,21 +24,21 @@
                 <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
             </span>
         </a>
-        <a href="#" class="flex items-center space-x-2 group">
+        <a href="{{ route('product_in.index') }}" class="flex items-center space-x-2 group">
             <i class="fas fa-box-open"></i>
             <span class="relative group-hover:text-yellow-400 lg:text-xs xl:text-base">
                 Barang Masuk
                 <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
             </span>
         </a>
-        <a href="#" class="flex items-center space-x-2 group">
+        <a href="{{ route('product_out.index') }}" class="flex items-center space-x-2 group">
             <i class="fas fa-box-open"></i>
             <span class="relative group-hover:text-yellow-400 lg:text-xs xl:text-base">
                 Barang Keluar
                 <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
             </span>
         </a>
-        <a href="#" class="flex items-center space-x-2 group">
+        <a href="{{ route('stock.index') }}" class="flex items-center space-x-2 group">
             <i class="fas fa-box"></i>
             <span class="relative group-hover:text-yellow-400 lg:text-xs xl:text-base">
                 Stok Barang

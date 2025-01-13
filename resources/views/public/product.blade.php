@@ -101,7 +101,7 @@
                 <div class="flex justify-center">
                     <!-- Update the preview image container -->
                     <img
-                    src="https://via.placeholder.com/500"
+                    src="https://i.pinimg.com/474x/c0/05/f1/c005f12867549656070006bf650579a2.jpg"
                     alt="Kebab Keju Lumer"
                     id="product-preview"
                     class="rounded-lg mb-4 w-56 h-56 object-cover"
