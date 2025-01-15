@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stock;
+use App\Models\ProductOut;
+use App\Models\ProductIn;
 
 class StockController extends Controller
 {
@@ -13,6 +15,33 @@ class StockController extends Controller
     public function index()
     {
         $stocks = Stock::all();
+
+        $stocks->each(function ($stock) {
+            // Ambil status dari ProductIn
+            $productIn = ProductIn::where('product', $stock->product)
+                ->where('expired_date', $stock->expired_date)
+                ->first();
+
+            // Ambil status dari ProductOut (jika ada)
+            $productOut = ProductOut::where('product', $stock->product)
+                ->where('expired_date', $stock->expired_date)
+                ->first();
+
+            // Prioritaskan status dari ProductIn, jika tidak ada ambil dari ProductOut
+            if ($productIn) {
+                $stock->status = $productIn->status;
+            } elseif ($productOut) {
+                $stock->status = $productOut->status;
+            } else {
+                $stock->status = 'unknown'; // Status default jika tidak ditemukan
+            }
+        });
+
+        // Kelompokkan berdasarkan kombinasi produk dan status
+        $stocks = $stocks->groupBy(function ($stock) {
+            return $stock->product . '-' . $stock->status;
+        })->flatten(1);
+
         return view('stocks.index', compact('stocks'));
     }
 
@@ -59,8 +88,13 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Stock $stock)
     {
-        //
+        
+        $stock->delete();
+
+        return redirect()->route('stock.index')->with('success','Data has been deleted successfuly');
+
     }
+
 }

@@ -92,9 +92,10 @@
                             <th class="px-6 py-3">Jumlah Tersedia</th>
                             <th class="px-6 py-3">Jumlah Keluar</th>
                             <th class="px-6 py-3">Jumlah Sekarang</th>
+                            <th class="px-6 py-3">Status</th>
                             <th class="px-6 py-3">Aksi</th>
                         </tr>
-                    </thead>
+                    </thead>                    
                     <tbody class="divide-y divide-gray-200">
                         @foreach ($stocks as $stock)
                         <tr>
@@ -104,11 +105,9 @@
                             <td class="px-6 py-4">{{ $stock->stock_in }}</td>
                             <td class="px-6 py-4">{{ $stock->stock_out }}</td>
                             <td class="px-6 py-4">{{ $stock->stock_now }}</td>
+                            <td class="px-6 py-4">{{ ucfirst($stock->status) }}</td>
                             <td class="px-6 py-4">
-                                <a href="{{ route('stock.edit', $stock->id) }}" class="px-3 py-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg shadow mr-2">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <form action="{{ route('stock.destroy', $stock->id) }}" method="POST" class="inline-block mt-2">
+                                <form action="{{ route('stock.destroy', $stock->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="px-3 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg shadow">
@@ -118,7 +117,7 @@
                             </td>
                         </tr>
                         @endforeach
-                    </tbody>
+                    </tbody>                                        
                 </table>                
             </div>
         </section>

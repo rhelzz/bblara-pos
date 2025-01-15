@@ -107,7 +107,7 @@
                             <td class="px-6 py-4">{{ $row->product }}</td>
                             <td class="px-6 py-4">{{ $row->expired_date }}</td>
                             <td class="px-6 py-4">{{ $row->quantity }}</td>
-                            <td class="px-6 py-4">{{ $row->status }}</td>
+                            <td class="px-6 py-4">{{ ucfirst($row->status) }}</td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('product_out.edit', $row->id) }}" class="px-3 py-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg shadow mr-2">
                                     <i class="fas fa-edit"></i> Edit
