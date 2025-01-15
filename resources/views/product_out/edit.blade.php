@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100 flex">
 
-    <x-navbar-pos></x-navbar-pos>
+    <x-navbar-pos-admin></x-navbar-pos-admin>
 
     <section class="w-4/5 px-10 py-10">
         <div class="flex justify-between items-center mb-6">

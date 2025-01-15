@@ -20,7 +20,7 @@
     <body class="bg-gray-100 flex">
 
         <!-- Sidebar -->
-        <x-navbar-pos></x-navbar-pos>
+        <x-navbar-pos-admin></x-navbar-pos-admin>
 
         <!-- Main Content -->
         <section class="w-4/5 p-4 flex justify-center items-center space-x-8">

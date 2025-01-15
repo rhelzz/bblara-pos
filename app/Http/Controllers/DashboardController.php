@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cashier;
 
 class DashboardController extends Controller
 {
@@ -11,7 +12,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view("public.dashboard");
+        // Ambil data cashier
+        $cashiers = Cashier::all();
+
+        // Hitung total pendapatan, total modal, total keuntungan, dan total transaksi
+        $totalPemasukan = $cashiers->sum('total_amount');
+        $totalModal = $cashiers->sum('cost_price');
+        $totalKeuntungan = $cashiers->sum('total_amount') - $cashiers->sum('cost_price');
+        $totalTransaksi = $cashiers->count();
+
+        // Kirim data ke view
+        return view('public.dashboard', compact('cashiers', 'totalPemasukan', 'totalModal', 'totalKeuntungan', 'totalTransaksi'));
     }
 
     /**
